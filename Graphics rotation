@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<canvas width="400" height="400" style="margin:200px; border: 1px solid #cccccc"></canvas>
+<script>
+    var canvas=document.querySelector("canvas");
+    var exc=canvas.getContext("2d");
+
+    var Rect=function(exc,x,y,width,height,rotation,isFill){
+        this.exc=exc;
+        this.x=x;
+        this.y=y;
+        this.width=width;
+        this.height=height;
+        this.rotation=rotation||0;
+        this.isFill=isFill;
+        this.draw();
+    };
+    Rect.prototype={
+        draw:function(){
+            this.exc.save();
+            this.exc.translate(this.x,this.y);
+            this.exc.rotate(this.rotation);
+            this.exc[this.isFill?"fillRect":"strokeRect"](-1*this.width/2,-1*this.height/2,this.width,this.height);
+            this.exc.restore();
+        }
+    };
+    var rect=new Rect(exc,200,200,200,130,10,false);
+    var a=0;
+    setInterval(function(){
+        a++;
+        if(a>360)a=0;
+        rect.rotation=a*Math.PI/3.1415927;
+        rect.draw();
+    },300);
+    //exc.restore();
+</script>
+</body>
+</html>
